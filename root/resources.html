@@ -1,34 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resources</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
-<body>
-    <header>
-        <h1>Safe Weather Solutions</h1>
-        <p>Emergency Resources</p>
-    </header>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="wildfire-updates.html">Wildfire Updates</a>
-        <a href="faq.html">FAQ</a>
-        <a href="tips.html">Preparedness Tips</a>
-        <a href="resources.html">Resources</a>
-        <a href="contact.html">Contact Us</a>
-    </nav>
-    <main>
-        <h2>Trusted Emergency Resources</h2>
-        <ul>
-            <li><a href="https://www.fire.ca.gov/" target="_blank">CAL FIRE</a></li>
-            <li><a href="https://www.ready.gov/wildfires" target="_blank">Ready.gov Wildfire Safety</a></li>
-            <li><a href="https://www.redcross.org/get-help/how-to-prepare-for-emergencies/types-of-emergencies/wildfire.html" target="_blank">Red Cross Wildfire Preparation</a></li>
-        </ul>
-    </main>
-    <footer>
-        <p>&copy; 2025 Safe Weather Solutions. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+const API_KEY = "YOUR_OPENWEATHERMAP_API_KEY"; // Get a free API key from OpenWeatherMap
+
+async function generatePackingList() {
+    const location = document.getElementById("location").value;
+    if (!location) {
+        alert("Please enter a city name!");
+        return;
+    }
+
+    const weatherData = await getWeather(location);
+    if (!weatherData) return;
+
+    const packingItems = getPackingRecommendations(weatherData.main.temp);
+    displayPackingList(packingItems);
+}
+
+async function getWeather(city) {
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
+        const data = await response.json();
+        if (data.cod !== 200) {
+            alert("City not found!");
+            return null;
+        }
+        return data;
+    } catch (error) {
+        alert("Error fetching weather data.");
+        return null;
+    }
+}
+
+function getPackingRecommendations(temp) {
+    if (temp > 25) {
+        return ["Sunglasses", "Sunscreen", "Light Clothing", "Hat", "Swimsuit"];
+    } else if (temp > 15) {
+        return ["Jacket", "Comfortable Shoes", "T-Shirts", "Jeans"];
+    } else {
+        return ["Heavy Jacket", "Gloves", "Scarf", "Thermal Wear", "Boots"];
+    }
+}
+
+function displayPackingList(items) {
+    const list = document.getElementById("packing-list");
+    list.innerHTML = "";
+    items.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+    });
+
+    document.getElementById("result").style.display = "block";
+}
