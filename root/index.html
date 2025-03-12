@@ -3,28 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safe Weather Solutions</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Packing List Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Safe Weather Solutions</h1>
-        <p>Your trusted source for wildfire updates and preparedness tips.</p>
-    </header>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="wildfire-updates.html">Wildfire Updates</a>
-        <a href="faq.html">FAQ</a>
-        <a href="tips.html">Preparedness Tips</a>
-        <a href="resources.html">Resources</a>
-        <a href="contact.html">Contact Us</a>
-    </nav>
-    <main>
-        <h2>Welcome to Safe Weather Solutions</h2>
-        <p>Stay informed about wildfires, learn how to prepare, and access resources to protect yourself and your community.</p>
-    </main>
-    <footer>
-        <p>&copy; 2025 Safe Weather Solutions. All rights reserved.</p>
-    </footer>
+    <div class="container">
+        <h1>Packing List Generator</h1>
+        <input type="text" id="location" placeholder="Enter a city...">
+        <button onclick="generatePackingList()">Get Packing List</button>
+        
+        <div id="result">
+            <h2>Recommended Items</h2>
+            <ul id="packing-list"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
